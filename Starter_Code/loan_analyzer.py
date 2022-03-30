@@ -75,8 +75,8 @@ print(f"The FV = {FV}")
 #   You'll want to use the **monthly** version of the present value formula.
 #   HINT: Present Value = Future Value / (1 + Discount_Rate/12) ** remaining_months
 discount = .2
-PV = FV / (1 + discount/12)**months
-print(f"PV = {PV}")
+PresV = FV / (1 + discount/12)**months
+print(f"PV = {PresV}")
 # YOUR CODE HERE!
 
 # If Present Value represents what the loan is really worth, does it make sense to buy the loan at its cost?
@@ -84,7 +84,7 @@ print(f"PV = {PV}")
 #    If the present value of the loan is greater than or equal to the cost, then print a message that says the loan is worth at least the cost to buy it.
 #    Else, the present value of the loan is less than the loan cost, then print a message that says that the loan is too expensive and not worth the price.
 # YOUR CODE HERE!
-if PV > loan["loan_price"]:
+if PresV > loan["loan_price"]:
     print("It's worth paying at least the cost of the loan to pick this one up.")
 else:
     print("This loan is too expensive, we'll be better off passing on this one.")
@@ -112,7 +112,11 @@ new_loan = {
 # @TODO: Define a new function that will be used to calculate present value.
 #    This function should include parameters for `future_value`, `remaining_months`, and the `annual_discount_rate`
 #    The function should return the `present_value` for the loan.
-# YOUR CODE HERE!
+def PV(future_value,remaining_months,annual_discount_rate):
+    present_value = future_value / (1 + annual_discount_rate/12)**remaining_months
+    return present_value
+disc = .2
+present_value = PV(new_loan["future_value"],new_loan["remaining_months"],disc)
 
 
 # @TODO: Use the function to calculate the present value of the new loan given below.
