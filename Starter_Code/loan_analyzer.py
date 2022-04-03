@@ -1,7 +1,9 @@
 # coding: utf-8
 import csv
 from pathlib import Path
+#above, we import the modules with the functions that we'll use to create a file path and write to a csv file
 
+#doc-String (similar to comment, but can go many lines and shows up in different places)
 """Part 1: Automate the Calculations.
 
 Automate the calculations for the loan portfolio summaries.
@@ -18,19 +20,28 @@ loan_costs = [500, 600, 200, 1000, 450]
 # @TODO: Use the `len` function to calculate the total number of loans in the list.
 # Print the number of loans from the list
 loan_count=len(loan_costs)
+# Used the f-string to print out the total number of loans in the loan_costs list
 print(f"Total number of loans = {loan_count}")
 
 # What is the total of all loans?
 # @TODO: Use the `sum` function to calculate the total of all loans in the list.
 # Print the total value of the loans
+# This time, stored the message as a variable and used a "," to concatenate the message with less lines of code
+message = "The total cost of all the loans ="
 loan_sum=sum(loan_costs)
-print(f"The total cost of all the loans = {loan_sum}")
+print(message,loan_sum)
 
 # What is the average loan amount from the list?
 # @TODO: Using the sum of all loans and the total number of loans, calculate the average loan price.
 # Print the average loan amount
 avg_loan = loan_sum / loan_count
-print(f"The average loan value is {avg_loan}")
+#print(f"The average loan value is {avg_loan}")
+#print("The average loan value is " + str(avg_loan))
+message = "The average loan value is"
+print(message, avg_loan)
+# Use the shortest when it makes sense to. Above, I've replaced the contents of the message variable with what I now want it to display
+# Displaying different ways to print the message above. 
+
 """Part 2: Analyze Loan Data.
 
 Analyze the loan to determine the investment evaluation.
@@ -64,31 +75,39 @@ loan = {
 
 # @TODO: Use get() on the dictionary of additional information to extract the Future Value and Remaining Months on the loan.
 # Print each variable.
-# YOUR CODE HERE!
 months = loan.get("remaining_months")
 print(f"There are {months} months left for the loan")
+# Above, we search the dictionary's Key:Value pairs by searching up the Key and returning the Value
+# In the print statement above, I decided to use F-string rather than inserting variables with "," because it would require 3
+# variables to be inserted and therefore be less readable
+# This extracting of the Values from within the dictionary will make it possible to run calculations using these Values as inputs
 
 FV = loan.get("future_value")
-print(f"The FV = {FV}")
+message = "The FV ="
+print(message, FV)
 # @TODO: Use the formula for Present Value to calculate a "fair value" of the loan.
 # Use a minimum required return of 20% as the discount rate.
 #   You'll want to use the **monthly** version of the present value formula.
 #   HINT: Present Value = Future Value / (1 + Discount_Rate/12) ** remaining_months
+
 discount = .2
 PresV = FV / (1 + discount/12)**months
-print(f"PV = {PresV}")
-# YOUR CODE HERE!
+message = "PV ="
+print(message, PresV)
 
+# Above is the calculation that takes in a given discount rate, Future Value, and Months left on the loan and outputs a Present Value (current worth)
 # If Present Value represents what the loan is really worth, does it make sense to buy the loan at its cost?
 # @TODO: Write a conditional statement (an if-else statement) to decide if the present value represents the loan's fair value.
 #    If the present value of the loan is greater than or equal to the cost, then print a message that says the loan is worth at least the cost to buy it.
 #    Else, the present value of the loan is less than the loan cost, then print a message that says that the loan is too expensive and not worth the price.
-# YOUR CODE HERE!
+
 if PresV > loan["loan_price"]:
     print("It's worth paying at least the cost of the loan to pick this one up.")
 else:
     print("This loan is too expensive, we'll be better off passing on this one.")
 
+# This conditional statement compares the "true worth" of the loan that we calculated to the acutal cost and provides a recommendation based on that comparison
+# In this case I did not replace the contents of the "message" variable since it doesn't make the code shorter or more readable
 
 """Part 3: Perform Financial Calculations.
 
@@ -118,12 +137,14 @@ def PV(future_value,remaining_months,annual_discount_rate):
 disc = .2
 present_value = PV(new_loan["future_value"],new_loan["remaining_months"],disc)
 
+# Above, we define a function to calculate the Present Value by simply calling the function, and passing the correct arguments to the parameters
+
 
 # @TODO: Use the function to calculate the present value of the new loan given below.
 #    Use an `annual_discount_rate` of 0.2 for this new loan calculation.
-# YOUR CODE HERE!
-print(f"The present value of the loan is: {present_value}")
-
+message = "The present value of the loan is:"
+print(message,present_value)
+# Extra note on the above syntax, a comma between variables will automatically provide a space, regardless of if there's a space after the comma within the print function
 
 """Part 4: Conditionally filter lists of loans.
 
@@ -171,8 +192,13 @@ for loan in loans:
     if loan["loan_price"]<=500:
         inexpensive_loans.append(loan)
 
+# The For loop above looks at the loan price of each line within the list and if it passes the criteria of having a price <= 500,
+# then it will add that dictionary to the newly created list inexpensive_loans. This is a way of filtering through a list
+
+
 # @TODO: Print the `inexpensive_loans` list
-print(f"Here's the data on all the cheap loans: {inexpensive_loans}")        
+message = "Here's the data on all the cheap loans:"
+print(message, inexpensive_loans)        
 
 
 """Part 5: Save the results.
@@ -203,3 +229,7 @@ with open(output_path, 'w', newline='') as csvfile:
     csvwriter.writerow(header)
     for row in inexpensive_loans:
         csvwriter.writerow(row.values())
+
+
+# Above, we call upon the imported modules to create the set-up and then run the set-up to save the filtered list of dictionaries (inexpensive_loans)
+# and save that list into a CSV file by separating out each value in the dictionary as a comma-delineated value and showing the Keys as a header in the 1st row
