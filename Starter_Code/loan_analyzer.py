@@ -1,7 +1,8 @@
 # coding: utf-8
+# below, we import the modules with the functions that we'll use to create a file path and write to a csv file
+
 import csv
 from pathlib import Path
-#above, we import the modules with the functions that we'll use to create a file path and write to a csv file
 
 #doc-String (similar to comment, but can go many lines and shows up in different places)
 """Part 1: Automate the Calculations.
@@ -82,18 +83,18 @@ print(f"There are {months} months left for the loan")
 # variables to be inserted and therefore be less readable
 # This extracting of the Values from within the dictionary will make it possible to run calculations using these Values as inputs
 
-FV = loan.get("future_value")
+fv = loan.get("future_value")
 message = "The FV ="
-print(message, FV)
+print(message, fv)
 # @TODO: Use the formula for Present Value to calculate a "fair value" of the loan.
 # Use a minimum required return of 20% as the discount rate.
 #   You'll want to use the **monthly** version of the present value formula.
 #   HINT: Present Value = Future Value / (1 + Discount_Rate/12) ** remaining_months
 
 discount = .2
-PresV = FV / (1 + discount/12)**months
+pres_v = fv / (1 + discount/12)**months
 message = "PV ="
-print(message, PresV)
+print(message, pres_v)
 
 # Above is the calculation that takes in a given discount rate, Future Value, and Months left on the loan and outputs a Present Value (current worth)
 # If Present Value represents what the loan is really worth, does it make sense to buy the loan at its cost?
@@ -101,7 +102,7 @@ print(message, PresV)
 #    If the present value of the loan is greater than or equal to the cost, then print a message that says the loan is worth at least the cost to buy it.
 #    Else, the present value of the loan is less than the loan cost, then print a message that says that the loan is too expensive and not worth the price.
 
-if PresV > loan["loan_price"]:
+if pres_v > loan["loan_price"]:
     print("It's worth paying at least the cost of the loan to pick this one up.")
 else:
     print("This loan is too expensive, we'll be better off passing on this one.")
@@ -131,11 +132,11 @@ new_loan = {
 # @TODO: Define a new function that will be used to calculate present value.
 #    This function should include parameters for `future_value`, `remaining_months`, and the `annual_discount_rate`
 #    The function should return the `present_value` for the loan.
-def PV(future_value,remaining_months,annual_discount_rate):
+def pv(future_value,remaining_months,annual_discount_rate):
     present_value = future_value / (1 + annual_discount_rate/12)**remaining_months
     return present_value
 disc = .2
-present_value = PV(new_loan["future_value"],new_loan["remaining_months"],disc)
+present_value = pv(new_loan["future_value"],new_loan["remaining_months"],disc)
 
 # Above, we define a function to calculate the Present Value by simply calling the function, and passing the correct arguments to the parameters
 
